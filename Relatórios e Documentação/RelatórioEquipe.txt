@@ -1,0 +1,43 @@
+# Relatório de Desenvolvimento e Divisão de Tarefas do Projeto
+
+## Resumo Executivo
+Este relatório descreve a estrutura da equipe de desenvolvimento do projeto, detalhando as responsabilidades de cada um dos 4 membros. O trabalho em conjunto garantiu o desenvolvimento completo do sistema, desde a sua infraestrutura de dados e lógica em Python, até o design e implementação da interface, com rigoroso controle de qualidade.
+
+---
+
+## Membros da Equipe e Responsabilidades
+
+### 👨‍💻 João Pedro
+**Função:** Desenvolvedor Principal (Backend e Dados)
+* Responsável pela estruturação e criação de toda a lógica principal do programa utilizando a linguagem **Python**.
+* Criador e administrador do banco de dados do sistema, utilizando a plataforma **Supabase**.
+* Desenvolvedor responsável pela criação dos dashboards, métricas e análises de dados utilizando **Power BI**.
+
+### 🎨 Gabriel Oliveira
+**Função:** Designer de Interface (UI/UX)
+* Responsável por idealizar e desenhar a interface visual do aplicativo.
+* Focou em projetar uma experiência de usuário intuitiva e agradável, servindo como base para a implementação do frontend.
+
+### 🛠️ Gabriel Miguel
+**Função:** Desenvolvedor Frontend e Integração
+* Responsável por implementar a nova interface (desenhada pelo Gabriel Oliveira) no código da aplicação.
+* Encarregado pela aplicação da grande maioria das melhorias no sistema.
+* Atuou ativamente na correção de bugs e ajustes de erros identificados durante o ciclo de desenvolvimento.
+
+### 🔍 Allan
+**Função:** Analista de Qualidade e Testes (QA)
+* Responsável por testar ativamente o sistema em busca de falhas e inconsistências.
+* Identificou e reportou erros para a equipe de desenvolvimento.
+* Sugeriu melhorias contínuas para o funcionamento e a usabilidade do programa.
+
+---
+
+## Dinâmica de Trabalho
+O fluxo de desenvolvimento do projeto ocorreu de forma colaborativa e iterativa:
+1. **Fundação:** João Pedro estruturou o backend (Python + Supabase).
+2. **Design:** Gabriel Oliveira projetou a aparência visual do software.
+3. **Implementação & Melhorias:** Gabriel Miguel converteu o design em código funcional e ajustou os problemas encontrados.
+4. **Validação:** Allan testava as entregas continuamente, gerando feedback que voltava para o Gabriel Miguel corrigir e refinar. Além disso, os dados gerados pelo sistema alimentavam o Power BI construído pelo João Pedro.
+
+> [!NOTE]
+> Este relatório serve como documentação oficial da autoria e do esforço conjunto da equipe para a entrega deste projeto.

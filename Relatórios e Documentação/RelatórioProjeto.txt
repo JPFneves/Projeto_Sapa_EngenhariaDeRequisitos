@@ -1,0 +1,56 @@
+# Relatório Técnico: SAPA (Sistema de Automação de Presença Acadêmica)
+
+> [!NOTE]
+> **Instituição:** UNISEPE
+> **Curso:** Análise e Desenvolvimento de Sistemas (ADS) - 3º Semestre
+> **Tipo de Projeto:** Extensão Acadêmica
+
+## 1. Introdução e Objetivo
+
+O **SAPA** (Sistema de Automação de Presença Acadêmica) foi desenvolvido com o objetivo de modernizar, agilizar e trazer confiabilidade para a chamada de alunos em ambiente universitário. 
+
+Historicamente, o controle de presença via chamada oral consome tempo valioso de aula e está sujeito a erros manuais. O SAPA soluciona isso implementando uma abordagem automatizada através de hardware simples (um leitor de código de barras USB) integrado a um software inteligente, responsivo e resiliente.
+
+## 2. Arquitetura do Sistema
+
+O software foi concebido sob o paradigma **Offline-First**, garantindo que as operações da sala de aula nunca sejam interrompidas por quedas de internet. A arquitetura divide-se em três camadas principais:
+
+- **Interface (Frontend):** Construída com a biblioteca `CustomTkinter` em Python, proporcionando uma interface gráfica moderna, com tema escuro (Dark Mode), responsiva a diferentes resoluções e aderente aos princípios modernos de UI/UX.
+- **Banco de Dados Local (Edge):** O banco de dados primário é o `SQLite3`. Por ser um banco embarcado, ele roda localmente na máquina do professor/laboratório, garantindo latência zero na leitura dos códigos de barras e funcionamento 100% offline.
+- **Sincronização em Nuvem (Backend):** Utiliza-se o **Supabase** (PostgreSQL-as-a-Service) como banco de dados na nuvem. Um motor de sincronização em background ("Universal Sync Manager") captura todas as inserções e modificações locais e as espelha na nuvem assim que a conexão de rede estiver disponível, através de requisições assíncronas (REST API).
+
+## 3. Principais Funcionalidades
+
+### 3.1. Captura Contínua e Global (Hardware Integration)
+O sistema foi programado para interceptar eventos de teclado em nível global dentro do aplicativo. Isso significa que o professor não precisa clicar em um campo de texto específico para o leitor funcionar. Basta o aluno aproximar a carteirinha a qualquer momento, e o leitor USB (que emula teclado) envia o RA; o sistema intercepta os dados, valida o aluno e registra o status com um aviso visual instantâneo na tela.
+
+### 3.2. Lógica Inteligente de Presença
+O SAPA trabalha com a premissa de que **todos os alunos possuem falta até que se prove o contrário**. 
+- Ao logar na disciplina, o painel do professor carrega a lista da turma marcando todos com `FALTA`.
+- A primeira leitura de uma carteirinha no dia registra a **Hora de Entrada**.
+- Uma segunda leitura opcional no mesmo dia registra a **Hora de Saída**.
+- Permite justificar ausências de forma manual no painel de administração (atestados, atrasos), alterando o status para `JUSTIFICADO`.
+
+### 3.3. Robô de Auditoria (Scheduler)
+Implementado via biblioteca `APScheduler`, o sistema possui um robô (Task) que roda automaticamente nos bastidores às 22:35 (de segunda a sexta). Este robô varre o banco de dados em busca de alunos matriculados nas disciplinas do dia corrente que não tiveram sua entrada registrada, efetivando e consolidando o status de "FALTA" em definitivo.
+
+### 3.4. Governança e Painel do Professor
+O projeto dispõe de controle de acesso segmentado:
+- **Painel de Configuração e Administração:** Protegido por senhas (variáveis de ambiente locais) onde é possível cadastrar alunos, professores, gerenciar a grade de disciplinas e reconfigurar credenciais de e-mail e nuvem.
+- **Painel do Professor:** Focado exclusivamente em acompanhamento em tempo real e extração de dados. O professor pode visualizar quem já chegou na aula corrente, pesquisar dias passados (calendário nativo) e disparar o envio de relatórios gerenciais por E-mail, contendo a planilha de presenças do dia.
+
+## 4. Tecnologias e Bibliotecas Utilizadas
+
+| Tecnologia / Lib | Propósito |
+|---|---|
+| **Python 3.14** | Linguagem central de desenvolvimento do projeto. |
+| **CustomTkinter** | Criação de interface de usuário (GUI) rica, substituindo o Tkinter nativo. |
+| **SQLite3** | Banco de dados transacional offline-first de baixíssima latência. |
+| **Supabase (REST)**| Banco de dados relacional na nuvem para persistência remota e centralização de dados acadêmicos. |
+| **APScheduler** | Motor de agendamento (Cron jobs) para fechamento de faltas automáticas. |
+| **Requests / Sockets** | Monitoramento em tempo real do status de rede (Online/Offline) e comunicação HTTP com APIs. |
+| **Pillow (PIL)** | Processamento da identidade visual do software (logos em interfaces gráficas). |
+
+## 5. Impacto e Conclusão
+
+Como projeto de extensão acadêmica, o SAPA demonstra a aplicação direta de conceitos avançados de engenharia de software na resolução de problemas cotidianos de uma instituição de ensino. A utilização de conceitos como persistência de dados concorrentes (threading de UI e sincronização paralela), resiliência de rede e design de interfaces focado em acessibilidade e produtividade qualificam a aplicação para adoção imediata e escalabilidade futura.

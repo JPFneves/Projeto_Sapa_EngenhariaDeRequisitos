@@ -1,0 +1,123 @@
+🐸 SAPA v10.0 — SISTEMA DE AUTOMAÇÃO DE PRESENÇA ACADÊMICA
+Manual de Uso — UNISEPE ADS
+Olá professor(a)! Este manual explica tudo que você precisa saber para usar o SAPA no dia a dia, desde a leitura das carteirinhas até a atualização dos gráficos da coordenação. Pode deixar esse arquivo guardado na pasta junto com o sistema, tá bom?
+
+📌 O QUE É O SAPA?
+O SAPA é um sistema feito para registrar a presença dos alunos em sala de aula de forma automática, usando o leitor de código de barras da carteirinha da faculdade. O aluno chega, passa a carteirinha no leitor, e pronto — a presença é registrada na hora, sem papel, sem chamada oral e com sincronização em nuvem.
+
+📂 O QUE VEM NAS PASTAS?
+📂SAPAV10.0
+main.py → O código-fonte do sistema.
+
+banco_sapa.db → O banco de dados local (gerado automaticamente na 1ª abertura).
+
+sapa.ico / sapa_novo_icone_cropped.png → Ícones e logo do sapo usados na tela.
+
+.env → Suas configurações de segurança (senha de admin, e-mail, chave do banco em nuvem).
+
+instalar.bat → Instala o SAPA como um programa real no computador.
+
+desinstalar.bat → Remove o SAPA do computador.
+
+📂SAPA_POWERBI
+dashboard_sapa.pbix → O arquivo do painel visual do Power BI.
+
+LEIA_ESTE_MANUAL.txt → Este arquivo.
+
+⚙️ INSTALAÇÃO RÁPIDA (PRIMEIRA VEZ)
+OPÇÃO 1 — Instalar como programa .exe (Recomendado):
+Para transformar o código Python em um programa instalável comum, o sistema usa uma ferramenta de compilação.
+
+Pré-requisito: Baixe e instale o programa gratuito Inno Setup no seu computador. Sem ele, o empacotador não funciona.
+
+Abra a pasta do SAPAV10.0 e dê um duplo clique no arquivo instalar.bat.
+
+Aguarde — o sistema vai trabalhar em segundo plano, acionar o Inno Setup para gerar o executável e instalá-lo no computador.
+
+Um atalho do SAPA vai aparecer na sua área de trabalho. É só abrir por lá!
+
+OPÇÃO 2 — Rodar via Código (Sem instalar):
+
+Pré-requisito: Python 3.10 ou superior instalado (baixe em python.org). Durante a instalação do Python, não esqueça de marcar a caixa "Add Python to PATH".
+
+Abra a pasta do SAPA e dê um duplo clique em main.py (ou clique direito → Abrir com → Python).
+
+📝 REGISTRANDO PRESENÇA (USO NO DIA A DIA)
+Passo 1 — Verifique a disciplina no topo da tela:
+O sistema detecta automaticamente qual aula está acontecendo com base no horário. Se a disciplina errada aparecer, clique no menu suspenso e selecione a correta manualmente.
+
+Passo 2 — Passe a carteirinha:
+O aluno aproxima a carteirinha no leitor USB.
+
+ENTRADA: Primeiro bipe do aluno → registra hora de entrada.
+
+SAÍDA: Segundo bipe (após 5 minutos de trava de segurança) → registra hora de saída.
+
+Legenda de Cores na Tela:
+
+✅ Verde: Presença confirmada.
+
+👋 Azul: Saída registrada.
+
+⚠️ Laranja: Aluno não cadastrado ou bipes muito rápidos (menos de 5 min).
+
+❌ Vermelho: Erro de leitura.
+
+(Caso o aluno não esteja cadastrado, uma janela pedirá o Nome e a Turma. Preencha e a presença já será contabilizada na hora).
+
+👨‍🏫 PAINEL DO PROFESSOR
+Acesso restrito por login. Fica na tela principal.
+
+O que você pode fazer aqui:
+
+Ver Lista: Selecione a disciplina e a data para ver quem está com status de ENTRADA (Verde), SAÍDA (Azul), JUSTIFICADO (Laranja) ou FALTA (Vermelho).
+
+Justificar Falta: Clique no nome do aluno → "Justificar" e escreva o motivo (ex: Atestado Médico).
+
+Remover Registro: Clique no aluno → "Remover" para apagar leituras acidentais.
+
+Enviar por E-mail: Envia o relatório diário da aula diretamente para o e-mail do professor responsável.
+
+Exportar para o Power BI: Clica em "Excel Histórico (Power BI)" para gerar a base de dados completa que alimenta o painel do BI.
+
+📊 COMO USAR O DASHBOARD NO POWER BI
+O SAPA conta com um painel de inteligência de dados para uso da coordenação. Siga este roteiro para atualizar os dados e apresentar o dashboard:
+
+1. Atualizando os Dados (Alimentando o Gráfico)
+
+No SAPA, entre no Painel do Professor e clique no botão "Excel Histórico (Power BI)" e salve seu arquivo na Pasta SAPA_POWERBI.
+
+Abra o arquivo do Power BI (.pbix) que está na pasta.
+
+No menu superior do Power BI, clique em "Transformar Dados", atualize a fonte dos Blocos 1 e 2 para o Arquivo que salvou e depois em Fechar e Aplicar. O Power BI vai ler a nova planilha do SAPA e todos os gráficos de presença e atrasos vão se ajustar automaticamente!
+
+2. Modo Tela Cheia (Para Apresentações / Projetor)
+Para o painel ficar com cara de sistema executável e esconder a interface de edição do Power BI:
+
+Feche os painéis laterais direitos ("Filtros", "Visualizações" e "Dados") clicando na setinha >.
+
+Dê um clique duplo rápido na palavra "Página Inicial" no topo da tela para esconder a barra de ferramentas superior.
+
+Vá no menu Exibição e clique em Ajustar à Página.
+
+
+⚙️ PAINEL DE ADMINISTRAÇÃO E CONFIGURAÇÕES
+Acesso restrito ao Administrador.
+
+Professores: Cadastre nomes, e-mails (login) e senhas dos docentes.
+
+Disciplinas: Cadastre as matérias, o professor responsável, o semestre, e preencha corretamente o Dia da Semana, pois é isso que o sistema usa para saber qual aula abrir automaticamente.
+
+E-mail e Nuvem: No ícone de engrenagem (⚙️), você configura a Senha de App do Gmail para disparar os relatórios e a chave de API do Supabase para manter o backup na nuvem seguro.
+
+🔌 SOBRE O LEITOR DE CÓDIGO DE BARRAS E FALTAS
+O SAPA aceita apenas os códigos no padrão UNISEPE (número de RA).
+
+Funciona com qualquer leitor USB comum (plug and play).
+
+Faltas Automáticas: Todo dia letivo, às 22h35, o sistema aplica FALTA automaticamente para todos os alunos que não biparam a carteirinha, desde que o computador e o SAPA estejam abertos.
+
+Dúvidas ou problemas? Converse com os desenvolvedores do sistema ou reinicie a aplicação. Bom uso! 🐸
+
+================================================================
+SAPA v10.0 — UNISEPE ADS

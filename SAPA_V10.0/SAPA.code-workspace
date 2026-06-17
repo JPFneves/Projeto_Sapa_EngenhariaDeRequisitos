@@ -1,0 +1,67 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "python.defaultInterpreterPath": "${workspaceFolder}/venv/Scripts/python.exe",
+        "python.terminal.activateEnvironment": true,
+        "python.envFile": "${workspaceFolder}/.env",
+        "python.analysis.typeCheckingMode": "basic",
+        "python.analysis.autoImportCompletions": true,
+        "python.analysis.diagnosticSeverityOverrides": {
+            "reportMissingImports": "warning"
+        },
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "files.encoding": "utf8",
+        "files.eol": "\n",
+        "files.trimTrailingWhitespace": true,
+        "files.exclude": {
+            "**/__pycache__": true,
+            "**/*.pyc": true,
+            "**/venv": true,
+            "**/*.zip": true
+        },
+        "terminal.integrated.defaultProfile.windows": "PowerShell",
+        "terminal.integrated.env.windows": {
+            "PYTHONPATH": "${workspaceFolder}"
+        }
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "🐸 SAPA — Executar",
+                "type": "debugpy",
+                "request": "launch",
+                "program": "${workspaceFolder}/main.py",
+                "console": "integratedTerminal",
+                "cwd": "${workspaceFolder}",
+                "envFile": "${workspaceFolder}/.env",
+                "python": "${workspaceFolder}/venv/Scripts/python.exe",
+                "justMyCode": true
+            },
+            {
+                "name": "🗄️ Resetar Banco de Dados",
+                "type": "debugpy",
+                "request": "launch",
+                "program": "${workspaceFolder}/database.py",
+                "console": "integratedTerminal",
+                "cwd": "${workspaceFolder}",
+                "python": "${workspaceFolder}/venv/Scripts/python.exe"
+            },
+            {
+                "name": "👤 Cadastrar Aluno (CLI)",
+                "type": "debugpy",
+                "request": "launch",
+                "program": "${workspaceFolder}/cadastrar_aluno.py",
+                "console": "integratedTerminal",
+                "cwd": "${workspaceFolder}",
+                "python": "${workspaceFolder}/venv/Scripts/python.exe"
+            }
+        ]
+    }
+}
